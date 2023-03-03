@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARSubsystems;
 
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject gameObjectToBeSpawned;
+    private GameObject spawnedObject = null;
 
     bool canSpawn = false;
 
@@ -28,7 +25,7 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SpawnObject();
+         SpawnObject();
     }
 
     private void SpawnObject()
@@ -36,14 +33,15 @@ public class SpawnManager : MonoBehaviour
         Touch touch = Input.GetTouch(0);
         if (touch.phase == TouchPhase.Began)
         {
-            if (canSpawn)
+            if (canSpawn && spawnedObject == null)
             {
-                var spawnedObject = Instantiate(
+                spawnedObject = Instantiate(
                     gameObjectToBeSpawned,
                     markerObject.transform.position,
                     Quaternion.identity
                 );
             }
         }
+    
     }
 }
